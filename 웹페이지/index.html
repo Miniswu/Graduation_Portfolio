@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+	<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Blueprint: Vertical Timeline</title>
+		<meta name="description" content="Blueprint: Vertical Timeline" />
+		<meta name="keywords" content="timeline, vertical, layout, style, component, web development, template, responsive" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/default.css" />
+		<link rel="stylesheet" type="text/css" href="css/component.css" />
+		<script src="js/modernizr.custom.js"></script>
+	<title>이낙연 빅데이터 분석 보고서</title>
+	<!-- Link Swiper's CSS -->
+	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<script language="javascript">
+
+		function sample_string_view(ans, typea) {
+		var obj = document.getElementById(typea);
+		if (ans) {
+		obj.style.top = window.event.clientY + document.body.scrollTop;
+		obj.style.left = window.event.clientX + document.body.scrollLeft;
+		obj.style.display = "block";
+		}
+		else {
+		obj.style.display = "none";
+		}
+		}
+		function sample_string_move(objName) {
+		var obj = document.getElementById(objName);
+		if (obj.style.display == "block") {
+		obj.style.top = window.event.clientY + document.body.scrollTop;
+		obj.style.left = window.event.clientX + document.body.scrollLeft;
+		}
+		}
+
+</script>
+
+
+	<style>
+		<meta name="viewport"content="width=device-width, initial-scale=1.0"><style>* {
+
+		}
+			box-sizing: border-box;
+		}
+
+		h1 {
+			color:#f0f0f0;
+
+		}
+
+		body {
+			background-color: #8d9db6;
+			font-family: Helvetica, sans-serif;
+
+		}
+
+
+		.title {
+			text-align: center;
+			padding: 15px;
+		}
+
+		.profile {
+
+			/* 이미지 저장 */
+
+		}
+		.imgg {
+			float:left;
+			clear:both;
+			padding-left:10px;
+			padding-right:25px;
+			padding-top:10px;
+			padding-bottom:10px;}
+
+		.wordcloud {
+
+			/*워드클라우드 작성*/
+			margine: 100px;
+			text-align: center;
+
+		}
+
+		.out {
+			text-align: center;
+			padding-top: 50px;
+		}
+
+		/* The actual timeline (the vertical ruler) 가운데 하얀 줄*/
+		.timeline {
+
+			position: relative;
+			max-width: 1000px;
+			margin: 0 auto;
+			margin-top: 3%;
+			margin-bottom: 7%;
+		}
+
+		/* The actual timeline (the vertical ruler) */
+		.timeline::after {
+			content: '';
+			position: absolute;
+			width: 6px;
+			background-color: white;
+			top: 0;
+			bottom: 0;
+			left: 50%;
+			margin-left: -3px;
+		}
+
+		/* containers around content */
+		.containers {
+			padding: 10px 40px;
+			position: relative;
+			background-color: inherit;
+			width: 50%;
+			height: 150px;
+			/* 월별 사이 길이  */
+		}
+
+		/* The circles on the timeline */
+		.containers::after {
+			content: '';
+			position: absolute;
+			width: 25px;
+			height: 25px;
+			right: -17px;
+			background-color: yellow;
+			border: 4px solid #FF9F55;
+			top: 15px;
+			border-radius: 50%;
+			z-index: 1;
+		}
+
+		/* Place the containers to the left */
+		.left {
+			left: -8%;
+		}
+
+		/* Place the containers to the right */
+		.right {
+			left: 50%;
+		}
+
+		/* Add arrows to the left containers (pointing right) */
+		.left::before {
+			content: " ";
+			height: 0;
+			position: absolute;
+			top: 22px;
+			width: 0;
+			z-index: 1;
+			right: 30px;
+			border: medium solid blue;
+			border-width: 10px 0 10px 10px;
+			/*삼각형 위치 */
+			border-color: transparent transparent transparent white;
+		}
+
+		/* Add arrows to the right containers (pointing left) */
+		.right::before {
+			content: " ";
+			height: 0;
+			position: absolute;
+			top: 22px;
+			width: 0;
+			z-index: 1;
+			left: 30px;
+			border: medium solid red;
+			border-width: 10px 10px 10px 0;
+			border-color: transparent white transparent transparent;
+		}
+
+		/* Fix the circle for containerss on the right side */
+		.right::after {
+			left: -16px;
+		}
+
+		/* The actual content */
+		.contents {
+			padding: 20px 50px;
+			background-color: white;
+			position: relative;
+			border-radius: 6px;
+		}
+
+		/* Media queries - Responsive timeline on screens less than 600px wide */
+		@media screen and (max-width: 600px) {
+
+			/* Place the timelime to the left */
+			.timeline::after {
+				left: 31px;
+			}
+
+			/* Full-width containerss */
+			.containers {
+				width: 50%;
+				padding-left: 20px;
+				padding-right: 25px;
+			}
+
+			/* Make sure that all arrows are pointing leftwards */
+			.containers::before {
+				left: 60px;
+				border: medium solid white;
+				border-width: 10px 10px 10px 0;
+				border-color: transparent white transparent transparent;
+			}
+
+			/* Make sure all circles are at the same spot */
+			.left::after,
+			.right::after {
+				left: 0%;
+			}
+
+			/* Make all right containerss behave like the left ones */
+			.right {
+				left: 0%;
+			}
+		}
+	</style>
+</head>
+
+<body>
+
+	<body>
+		<div class="title">
+			<h1 style="font-size:50px; font-weight:bold; color:#f0f0f0;">
+				< 이낙연의 Profiling Report >
+			</h1>
+		</div>
+	</body>
+
+	<body>
+		<div style="border:3px solid gray; padding:15px;" class="profile">
+
+			<img class="imgg" src="/Users/chaeyeonhwang/Desktop/reportingfile (3) (1)/이낙연.png" width="550px">
+			<div style="font-size:20px; padding-left:50px">
+			<p><h style="font-weight:bold; font-size:25px;">* 출생</h> :  1952년, 전라남도 영광</p>
+			<p><h style="font-weight:bold;font-size:25px;">* 학력</h> :  서울대학교 법학 학사</p>
+			<p><h style="font-weight:bold;font-size:25px;">* 수상</h> :  2013년 국제평화언론대상 의정부문 최우수상</p>
+			<p><h style="padding-left:80px;">2013년 국정감사 NGO모니터단 국정감사 우수의원</h></p>
+			<p><h style="font-weight:bold;font-size:25px;">* 경력</h> :  2017.05~2020.01 제45대 대한민국 국무총리</p>
+			 <p><h style="padding-left:80px;">2014.07~2017.05 제37대 전라남도 도지사</h></p>
+
+
+
+			</div>
+			<a style="font-size: 20px;
+		padding-left:10px;
+		padding-bottom: 10px;
+		color:blue;" href="https://story.kakao.com/ch/nylee/">카카오스토리</a>
+		  <a style="font-size: 20px;
+		padding-left:10px;
+		padding-bottom: 10px;
+		color:blue;" href="https://www.facebook.com/21nylee">페이스북</a>
+		  <a style="font-size: 20px;
+		padding-left:10px;
+		padding-bottom: 10px;
+		color:blue;" href="https://twitter.com/nylee21">트위터</a>
+		  <a style="font-size: 20px;
+		padding-left:10px;
+		padding-bottom: 10px;
+		color:blue;" href="https://www.instagram.com/leenakyon/">인스타그램</a>
+		  <a style="font-size: 20px;
+		padding-left:10px;
+		padding-bottom: 10px;
+		color:blue;" href="https://blog.naver.com/21nylee">블로그</a>
+
+
+
+
+		</div>
+	</body>
+<body>
+		<!-- Swiper -->
+		<div style="border:3px solid gray; padding-left:80px;" class="swiper-containers" >
+
+			<div class="swiper-wrapper">
+
+			<body>
+		<div>
+
+				<ul class="cbp_tmtimeline">
+							<br><br><br><br><br><br><br><br><br><br><br><br>
+					<li>
+						<time class="cbp_tmtime"><span>2016-08-27</span> <span>더불어민주당 추미애 당대표 당선</span></time>
+					</li>
+					<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+					<li>
+						<time class="cbp_tmtime"><span>2017-03-10</span> <span>18대 박근혜 대통령 탄핵</span></time>
+					</li>
+					<br><br><br><br>
+					<li>
+						<time class="cbp_tmtime"><span>2017-05-09</span> <span>19대 대선 문재인 대통령 당선</span></time>
+						<br><br><br><br>
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2018-04-02</span> <span>4당 교섭단체 체제로 전환</span></time>
+						<br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2018-06-13</span> <span>제7회 전국동시지방선거 및<br> 국회의원 재·보궐선거 투표</span></time>
+					<br><br><br><br><br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2018-08-25</span> <span>더불어민주당 이해찬 당대표 당선</span></time>
+					<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2018-12-11</span> <span>자유한국당 나경원 원내대표 당선</span></time>
+					<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2019-02-27</span> <span>자유한국당 황교안 당대표 당선</span></time>
+					<br><br><br><br><br><br><br><br><br><br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2019-04-03</span> <span>4.3 보궐선거</span></time>
+					<br><br><br><br><br><br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2019-05-08</span> <span>더불어민주당 이인영<br>원내대표 당선</span></time>
+					<br><br><br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2019-05-15</span> <span>바른미래당 오신환 원내대표 당선</span></time>
+					<br><br><br><br><br><br> <br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2019-07-25</span> <span>수석급 인사교체</span></time>
+					<br><br><br><br><br><br> <br> <br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2019-09-09</span> <span>조국 법무부 장관 임명</span></time>
+					<br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2019-10-14</span> <span>조국 법무부 장관 사퇴</span></time>
+					<br><br><br><br><br><br> <br><br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2019-12-27</span> <span>공직 선거법 개정안 국회 통과</span></time>
+					<br><br><br><br><br>
+
+					</li>
+
+				</ul>
+
+		</div>
+	</body>
+
+
+				<div class="swiper-slide">
+
+          <h3 style="text-align:center; font-size:40px; font-weight:bold; color:#e0e2e4; padding-top:30px;margin-left:auto; margini-right:auto;text-align:center;"> < 대선 ></h3>
+
+
+
+					<body>
+					<div class="timeline">
+
+							<div class="containers left">
+								<div class="contents">
+									<h3>2016년 04월</h3>
+									<p style="font-size:18px;">현재까지 더민주 내부에선 이낙연 지사에 대적할 만한 정치인은 찾아보기 쉽지 않다.</p>
+								</div>
+								<p style="text-align:right; font-size:20px; color:red">• 이낙연 총리 출마 선언</p>
+							</div>
+
+							<div class="containers right">
+								<div class="contents">
+									<h3>05월</h3>
+									<p style="font-size:18px;">"호남이 더민주를 심판한 것은 더민주가 정권교체를 할 수 있을지 미덥지 못했기 때문" </p>
+								</div>
+							</div>
+							<div class="containers left">
+								<div class="contents">
+									<h3>09월</h3>
+									<p style="font-size:18px;">더민주 차기 대권주자 적합도 문재인 전 대표가 26.2%로 1위를 기록, 이낙연 전남지사는 1.2%를 기록</p>
+								</div>
+							</div>
+							<div class="containers right">
+								<div class="contents">
+									<h3>11월</h3>
+									<p style="font-size:18px;">이낙연 전남지사 "朴대통령, 퇴진결심 미루지 말아야"</p>
+								</div>
+							</div>
+							<div class="containers left">
+								<div class="contents">
+									<h3>12월</h3>
+									<p style="font-size:18px;">28일 내년 대선에 출마하지 않겠다는 뜻을 피력</p>
+								</div>
+								<p style="text-align:right; font-size:20px; color:red">• 이낙연 총리 불출마</p>
+
+							</div>
+              <div class="containers right">
+								<div class="contents">
+									<h3>2017년 05월</h3>
+									<p style="font-size:18px;">새 정부의 첫 총리 후보자로 이낙연 전남지사가 지명</p>
+								</div>
+								<p style="text-align:left; font-size:20px; color:red">• 이낙연 총리 임명</p>
+
+							</div>
+              <div class="containers left">
+								<div class="contents">
+									<h3>2018년 06월</h3>
+									<p style="font-size:18px;">총리 국회 추천제를 한다면 이 총리 같은 좋은 분을 과연 모실 수 있겠느냐</p>
+								</div>
+							</div>
+              <div class="containers right">
+								<div class="contents">
+									<h3>07월</h3>
+									<p style="font-size:18px;">이낙연 국무총리도 노 전 대통령이 당선인일 때 대변인을 했던 점을 감안하면 입법부와 행정부 주요 포스트를 ‘노무현의 사람들’이 접수한 모양새</p>
+								</div>
+							</div>
+              <div class="containers left">
+								<div class="contents">
+									<h3>09월</h3>
+									<p style="font-size:18px;">이낙연 총리도 4선 의원, 광역단체장 등을 역임해 대권에 도전해도 손색이 없다</p>
+								</div>
+							</div>
+              <div class="containers right">
+								<div class="contents">
+									<h3>10월</h3>
+									<p style="font-size:18px;">이낙연 총리는 14.6%를 얻어 박원순 서울시장(11.7%)을 제치고 1위를 기록</p>
+								</div>
+							</div>
+              <div class="containers left">
+								<div class="contents">
+									<h3>11월</h3>
+									<p style="font-size:18px;">경제팀 인사의 특징, 이낙연 국무총리의 존재감이 더 커졌다</p>
+								</div>
+							</div>
+              <div class="containers right">
+								<div class="contents">
+									<h3>12월</h3>
+									<p style="font-size:18px;">대통령 성공 한마음…내분 없어” 현재 이 총리에겐 현직 프리미엄이 작용중</p>
+								</div>
+							</div>
+              <div class="containers left">
+								<div class="contents">
+									<h3>2019년 01월</h3>
+									<p style="font-size:18px;">각종 여론조사에서 여권 후보 중 유일하게 20%대를 기록하며 1위를 유지</p>
+								</div>
+							</div>
+              <div class="containers right">
+								<div class="contents">
+									<h3>02월</h3>
+									<p style="font-size:18px;"> 이 총리에 대한 여권의 평가는 대체로 긍정적</p>
+								</div>
+							</div>
+              <div class="containers left">
+								<div class="contents">
+									<h3>03월</h3>
+									<p style="font-size:18px;">'탈원전'이란 말을 쓰지 않았느냐는 질문에 이낙연 총리는 “선거 때 조금 과장된 언어를 쓴 것”</p>
+								</div>
+							</div>
+              <div class="containers right">
+								<div class="contents">
+									<h3>04월</h3>
+									<p style="font-size:18px;">여권 주자 선호도 1위 이낙연  임기후 총선서 역할의지 드러내..자신이 자유인이 될 경우 내년 총선에 도움이 되고 싶다는 취지의 발언</p>
+								</div>
+							</div>
+              <div class="containers left">
+								<div class="contents">
+									<h3>05월</h3>
+									<p style="font-size:18px;">여론조사에서 가장 앞서고 있는 인물..이낙연 총리</p>
+								</div>
+							</div>
+              <div class="containers right">
+								<div class="contents">
+									<h3>06월</h3>
+									<p style="font-size:18px;">“저도 정부·여당에 속한 일원으로 거기서 뭔가 일을 시키면 합당한 일을 할 것”</p>
+								</div>
+							</div>
+              <div class="containers left">
+								<div class="contents">
+									<h3>08월</h3>
+									<p style="font-size:18px;">이낙연 국무총리가 황교안 자유한국당 대표를 확실하게 눌렀다.</p>
+								</div>
+							</div>
+              <div class="containers right">
+								<div class="contents">
+									<h3>10월</h3>
+									<p style="font-size:18px;"> "총선에 힘을 보탤 수 있다"</p>
+								</div>
+							</div>
+              <div class="containers left">
+								<div class="contents">
+									<h3>12월</h3>
+									<p style="font-size:18px;">서울에서 가장 상징적인 지역,종로..이낙연 총리의 출마가 유력</p>
+								</div>
+							</div>
+              <div class="containers right">
+								<div class="contents">
+									<h3>2020년 01월</h3>
+									<p style="font-size:18px;">대선 후보군 중 이낙연 전 총리의 지지율은 압도적</p>
+								</div>
+							</div>
+
+						</div>
+					</body>
+				</div>
+			<body>
+		<div>
+
+				<ul class="cbp_tmtimeline">
+					<li>
+						<time class="cbp_tmtime"><span>2019/02/14 </span> <span> 한글은 우리나라 언어 한국의 언어입니다. </span></time>
+
+
+					</li>
+					<br><br><br><br><br>
+
+					<li>
+						<time class="cbp_tmtime"><span>4/11/13</span> <span>12:04</span></time>
+
+
+					</li>
+					<br><br><br><br><br>
+					<li>
+						<time class="cbp_tmtime" datetime="2013-04-13 05:36"><span>4/13/13</span> <span>05:36</span></time>
+						<br><br><br><br><br>
+					</li>
+					<li>
+						<time class="cbp_tmtime" datetime="2013-04-15 13:15"><span>4/15/13</span> <span>13:15</span></time>
+						<br><br><br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime" datetime="2013-04-16 21:30"><span>4/16/13</span> <span>21:30</span></time>
+					<br><br><br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime" datetime="2013-04-17 12:11"><span>4/17/13</span> <span>12:11</span></time>
+					<br><br><br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime" datetime="2013-04-18 09:56"><span>4/18/13</span> <span>09:56</span></time>
+					<br><br><br><br><br>
+
+					</li>
+				</ul>
+
+		</div>
+	</body>
+				<div class="swiper-slide">
+          <h3 style="text-align:center; font-size:40px; font-weight:bold; color:#e0e2e4; padding-top:30px; margin-left:auto; margini-right:auto;text-align:center;"> < 외교 > </h3>
+
+
+
+					<body>
+					<div class="timeline">
+
+							<div class="containers left">
+								<div class="contents">
+									<h3>2016년 01월</h3>
+									<p style="font-size:18px;">일본 고치현과 자매결연 체결키로</p>
+								</div>
+							</div>
+							<div class="containers right">
+								<div class="contents">
+									<h3>02월</h3>
+									<p style="font-size:18px;">미국서 5억 5천만 달러 투자의향 확인 ·1천만 달러 농수산식품 수출협약</p>
+								</div>
+							</div>
+							<div class="containers left">
+								<div class="contents">
+									<h3>03월</h3>
+									<p style="font-size:18px;">이낙연 전남도지사 일본 도쿄도지사와 양국간 주요 현안을 심도있게 논의</p>
+								</div>
+							</div>
+							<div class="containers right">
+								<div class="contents">
+									<h3>2017년 07월</h3>
+									<p style="font-size:18px;">한미 정상회담 성공적. 한반도 비핵화라는 공동 목표를 재확인, 한국의 주도적 역할에 대한 지지 확인</p>
+								</div>
+							</div>
+
+              <div class="containers left">
+								<div class="contents">
+									<h3>08월</h3>
+									<p style="font-size:18px;">"작년 체결된 고용허가제 MOU(양해각서)에 따라 올해 처음으로 라오스 근로자들이 한국에서 일할 수 있게 된 것은 매우 의미 있는 일""</p>
+								</div>
+							</div>
+              <div class="containers right">
+								<div class="contents">
+									<h3>09월</h3>
+									<p style="font-size:18px;" >"한일 관계가 가장 좋았던 (1998년) 당시의 양국 관계를 회복했으면 좋겠다"</p>
+								</div>
+							</div>
+              <div class="containers left">
+								<div class="contents">
+									<h3>10월</h3>
+									<p style="font-size:18px;">각국 정상급 인사들로부터 '평창 지원' 약속 받아내… 친분 다진 '실리외교'</p>
+								</div>
+							</div>
+              <div class="containers right">
+								<div class="contents">
+									<h3>2018년 05월</h3>
+									<p style="font-size:18px;">"오스트리아 협력파트너..교역·투자 확대 공동노력"</p>
+								</div>
+							</div>
+              <div class="containers left">
+								<div class="contents">
+									<h3>06월</h3>
+									<p style="font-size:18px;">"한-러 실질 협력 강화 희망, 극동 협력은 남북 번영에도 도움"</p>
+								</div>
+							</div>
+              <div class="containers right">
+								<div class="contents">
+									<h3>07월</h3>
+									<p style="font-size:18px;">아프리카 중동 방문 李총리, 비즈니스 외교 및 한반도 비핵화 협력 확보</p>
+								</div>
+							</div>
+              <div class="containers left">
+								<div class="contents">
+									<h3>08월</h3>
+									<p style="font-size:18px;">조코위 대통령 예방, 한-인니 전략적 동반자 관계 심화하기로…</p>
+								</div>
+							</div>
+              <div class="containers right">
+								<div class="contents">
+									<h3>09월</h3>
+									<p style="font-size:18px;">동방경제포럼서 韓정부 대화 노력 지지 호소  “한반도, 동북아 화약고서 공동번영 발신지로 동북아 경제공동체, 유라시아 번영에 직결”</p>
+								</div>
+							</div>
+              <div class="containers left">
+								<div class="contents">
+									<h3>10월</h3>
+									<p style="font-size:18px;"> “韓日관계 미래지향적 발전 희망”… 이낙연 총리 직접 나서 메시지</p>
+								</div>
+							</div>
+              <div class="containers right">
+								<div class="contents">
+									<h3>12월</h3>
+									<p style="font-size:18px;">알제리ㆍ튀니지ㆍ모로코 방문…MOU 15건ㆍ협의문건 3건 체결</p>
+								</div>
+							</div>
+              <div class="containers left">
+								<div class="contents">
+									<h3>2019년 01월</h3>
+									<p style="font-size:18px;">일본 향한 잇단 강경메시지…"과거앞에 겸허해야"</p>
+								</div>
+							</div>
+              <div class="containers right">
+								<div class="contents">
+									<h3>03월</h3>
+									<p style="font-size:18px;">몽골 공식방문.. 한-몽골 신북방 정책 실질협력 강화 리커창 中총리와 미세먼지·사드 등 교류협력 정상화 논의…보아오포럼 참석</p>
+								</div>
+							</div>
+              <div class="containers left">
+								<div class="contents">
+									<h3>04월</h3>
+									<p style="font-size:18px;">쿠웨이트ㆍ콜롬비아ㆍ에콰도르ㆍ미국ㆍ포르투갈 방문 9박11일 간의 세일즈 외교에 나서...</p>
+								</div>
+							</div>
+              <div class="containers right">
+								<div class="contents">
+									<h3>07월</h3>
+									<p style="font-size:18px;">한일관계 구원투수 이낙연 "공동의 가치, 복원"</p>
+								</div>
+							</div>
+              <div class="containers left">
+								<div class="contents">
+									<h3>08월</h3>
+									<p style="font-size:18px;">“日 수출규제 철회 땐 지소미아 종료 재검토 가능”, 韓 백색국가 제외’ 시행…</p>
+								</div>
+							</div>
+              <div class="containers right">
+								<div class="contents">
+									<h3>10월</h3>
+									<p style="font-size:18px;">아베 총리 "국가 간 약속 준수 요구"…이낙연 총리 "협정 존중, 지혜 모아야"</p>
+								</div>
+							</div>
+
+						</div>
+					</body>
+				</div>
+			<body>
+		<div>
+
+				<ul class="cbp_tmtimeline">
+					<li>
+						<time class="cbp_tmtime"><span>2019/01/01</span> <span> 한글은 우리라나의 언어입니다?? </span></time>
+					</li>
+					<br><br><br><br><br>
+
+					<li>
+						<time class="cbp_tmtime"><span>4/11/13</span> <span>12:04</span></time>
+
+
+					</li>
+					<br><br><br><br><br>
+					<li>
+						<time class="cbp_tmtime" datetime="2013-04-13 05:36"><span>4/13/13</span> <span>05:36</span></time>
+						<br><br><br><br><br>
+					</li>
+					<li>
+						<time class="cbp_tmtime" datetime="2013-04-15 13:15"><span>4/15/13</span> <span>13:15</span></time>
+						<br><br><br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime" datetime="2013-04-16 21:30"><span>4/16/13</span> <span>21:30</span></time>
+					<br><br><br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime" datetime="2013-04-17 12:11"><span>4/17/13</span> <span>12:11</span></time>
+					<br><br><br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime" datetime="2013-04-18 09:56"><span>4/18/13</span> <span>09:56</span></time>
+					<br><br><br><br><br>
+
+					</li>
+				</ul>
+
+		</div>
+	</body>
+				<div class="swiper-slide">
+          <h3 style="text-align:center; font-size:40px; font-weight:bold; color:#e0e2e4; padding-top:30px; margin-left:auto; margini-right:auto;text-align:center;"> < 통일 > </h3>
+
+
+
+					<body>
+               <div class="timeline">
+
+                     <div class="containers left">
+                        <div class="contents">
+                           <h3>2016년 03월</h3>
+                           <p style="font-size:18px;"> "햇볕정책을 지지하는 지방이나 정당이 안보에 약하다는 생각을 줘서도 안되고, 그런 생각을 가져서도 안된다"고 지적</p>
+                        </div>
+                     </div>
+                     <div class="containers right">
+                        <div class="contents">
+                           <h3>04월</h3>
+                           <p style="font-size:18px;">"최근 남북 관계가 좋지 않지만 이런 때일수록 우리가 통일 염원을 잊지 않고 있음을 알려야 한다"</p>
+                        </div>
+                     </div>
+                     <div class="containers left">
+                        <div class="contents">
+                           <h3>05월</h3>
+                           <p style="font-size:18px;">"남북한이 공동 번영하는 통일국가로 발전하도록 협력해 나가겠다"</p>
+                        </div>
+                     </div>
+                     <div class="containers right">
+                        <div class="contents">
+                           <h3>06월</h3>
+                           <p style="font-size:18px;">민주평통 전남회의, 국민 참여형 통일방안 건의</p>
+                        </div>
+                     </div>
+                     <div class="containers left">
+                        <div class="contents">
+                           <h3>10월</h3>
+                           <p style="font-size:18px;">전남-경남, 통일 기반 조성·유대 강화 나서 “일상생활 속에서 통일에 도움을 주는 길은 3만 명의 탈북자, 52만 명의 조선족을 잘 대해줘 그 분위기가 그들의 가족들에게 전달되도록 하는 것”</p>
+                        </div>
+                     </div>
+              <div class="containers right">
+                        <div class="contents">
+                           <h3>2017년 03월</h3>
+                           <p style="font-size:18px;"><제98주년 3․1절 기념식> "선조들이 꿈꾸셨을 자유와 민주와 정의가 살아있는 통일국가의 초석을 전남에서 다져나가겠다”고 다짐</p>
+                        </div>
+                     </div>
+              <div class="containers left">
+                        <div class="contents">
+                           <h3>05월</h3>
+                           <p style="font-size:18px;">"북한은 우리의 안보를 위협하는 대상이면서 동시에 통일 국가를 이뤄가야 할 대상"</p>
+                        </div>
+                     </div>
+              <div class="containers right">
+                        <div class="contents">
+                           <h3>06월</h3>
+                           <p style="font-size:18px;"><2017 한반도통일 심포지엄> "북한이 합리적인 선택을 하도록 압박하고 유도해 갈 것"</p>
+                        </div>
+                     </div>
+              <div class="containers left">
+                        <div class="contents">
+                           <h3>07월</h3>
+                           <p style="font-size:18px;">얼음 밑에도 강물 흘러…北 평창올림픽 참여 다시 제안</p>
+                        </div>
+                     </div>
+              <div class="containers right">
+                        <div class="contents">
+                           <h3>08월</h3>
+                           <p style="font-size:18px;">李총리 "탈북자 포용, 통일 앞당기는 데 기여"</p>
+                        </div>
+                     </div>
+              <div class="containers left">
+                        <div class="contents">
+                           <h3>10월</h3>
+                           <p style="font-size:18px;">“한반도 긴장이 완화되고 평화올림픽이 되도록 모든 노력을 다하겠다”고 약속</p>
+                        </div>
+                     </div>
+              <div class="containers right">
+                        <div class="contents">
+                           <h3>2018년 02월</h3>
+                           <p style="font-size:18px;">"내편 네편 가르지 말고 평창올림픽 성공 한마음 돼야"</p>
+                        </div>
+                     </div>
+              <div class="containers left">
+                        <div class="contents">
+                           <h3>06월</h3>
+                           <p style="font-size:18px;">"기적처럼 찾아온 평화, 반드시 살려 나갈 것"</p>
+                        </div>
+                     </div>
+              <div class="containers right">
+                        <div class="contents">
+                           <h3>09월</h3>
+                           <p style="font-size:18px;"> 정상회담 ‘D-1’…이낙연 총리 "정상회담 전이지만, 긴박감과 심장 박동이 느껴진다"</p>
+                        </div>
+                     </div>
+              <div class="containers left">
+                        <div class="contents">
+                           <h3>10월</h3>
+                           <p style="font-size:18px;">"이북도민 도움이 한반도 평화의 정착에 도움"</p>
+                        </div>
+                     </div>
+             <div class="containers right">
+                      <div class="contents">
+                        <h3>2019년 1월</h3>
+                        <p style="font-size:18px;">남북이 여러 기회를 통해 공동으로 한반도 산림회복과 평화정착의 의지를 세계로 발신하자고 당부</p>
+                      </div>
+                    </div>
+              <div class="containers left">
+                        <div class="contents">
+                         <h3>4월</h3>
+                         <p style="font-size:18px;">李총리 "임정 100년, 분단 극복하고 평화의 한반도로"</p>
+                       </div>
+                     </div>
+               <div class="containers right">
+                         <div class="contents">
+                          <h3>10월</h3>
+                          <p style="font-size:18px;">현재 남북관계는 소강 국면.. 남북 조속히 대화 실천 부탁</p>
+                        </div>
+                      </div>
+              <div class="containers left">
+                        <div class="contents">
+                           <h3>11월</h3>
+                           <p style="font-size:18px;">"남북, 어려움 넘어 통일 향해 한걸음씩 다가가야"</p>
+                        </div>
+                     </div>
+              <div class="containers right">
+                        <div class="contents">
+                           <h3>2020년 01월</h3>
+                           <p style="font-size:18px;">이북도민 만난 이낙연 "평화통일의 꿈, 결코 포기할 수 없어"</p>
+                        </div>
+                     </div>
+                    </div>
+               </body>
+            </div>
+
+
+		<body>
+		<div>
+
+				<ul class="cbp_tmtimeline">
+					<li>
+						<time class="cbp_tmtime"><span>2016/01 </span> <span> 고용률 68% 달성을 목표로 기업 유치 및 일자리 사업 추진 </span></time>
+
+
+					</li>
+					<br><br><br><br><br>
+
+					<li>
+						<time class="cbp_tmtime"><span>2016/06</span> <span>전국 지자체 일자리 시상식서 1위
+
+</span></time>
+
+
+					</li>
+					<br><br><br><br><br>
+					<li>
+						<time class="cbp_tmtime" ><span>2016/10</span> <span>2017 도정 청사진 제시</span></time>
+						<br><br><br><br><br>
+					</li>
+					<li>
+						<time class="cbp_tmtime" ><span>2016/12</span> <span>일자리 정책 강화 및 각종 격차 문제 완화하겠다 선언</span></time>
+						<br><br><br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2017/06</span> <span>일자리 창출을 위한 정부의 적극 지원 의지 나타냄
+</span></time>
+					<br><br><br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2017/12</span> <span>청년 삶에 맞닿는 정책 필요성 언급
+</span></time>
+					<br><br><br><br><br>
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2018/01</span> <span>중소기업 경쟁력 강화를 위한 정책 수단 가동 의지 보임
+
+</span></time>
+					<br><br><br><br><br>
+
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2018/05</span> <span>일자리 안정자금 내년에도 유지
+</span></time>
+					<br><br><br><br><br>
+
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2018/06</span> <span>근로시간 단축
+</span></time>
+					<br><br><br><br><br>
+
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2018/08</span> <span>희망적 수치에 안주하지 않고, 비관적 수치에 위축되지 말아야함
+</span></time>
+					<br><br><br><br><br>
+
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2018/12</span> <span>최저 임금법 개정안 발의
+</span></time>
+					<br><br><br><br><br>
+
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2019/01</span> <span>이총리 신년축사 키워드 노동-> 투자
+</span></time>
+					<br><br><br><br><br>
+
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2019/03</span> <span>최저임금 인상의 명암</span></time>
+					<br><br><br><br><br>
+
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2019/07</span> <span>지난 2년간 취업난과 실업 완화되지 못함</span></time>
+					<br><br><br><br><br>
+
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2019/11</span> <span>주52시간제, 법 개정 서둘러 달라</span></time>
+					<br><br><br><br><br>
+
+
+					</li>
+					<li>
+						<time class="cbp_tmtime"><span>2020/01</span> <span>취약계층 일자리사업 연초 시행</span></time>
+					<br><br><br><br><br>
+
+
+					</li>
+				</ul>
+
+		</div>
+	</body>
+            <div class="swiper-slide">
+          <h3 style="text-align:center; font-size:40px; font-weight:bold; color:#e0e2e4; padding-top:30px; margin-left:auto; margini-right:auto;text-align:center;"> < 노동 > </h3>
+
+               <body>
+               <div class="timeline">
+
+                     <div class="containers left">
+                        <div class="contents">
+                           <h3>2016년 01월</h3>
+                           <p style="font-size:18px;">전남, 올해 취업자 수 1만 명 증가 + 청년 취업자 3천 명 증가... 고용률 68% 달성을 목표로 기업 유치 및 각종 일자리사업을 추진</p>
+                        </div>
+                     </div>
+                     <div class="containers right">
+                        <div class="contents">
+                           <h3>02월</h3>
+                           <p style="font-size:18px;">대학 안 ‘산학협력 취업패키지 과정’운영을 위한 업무협약을 체결</p>
+                        </div>
+                     </div>
+                     <div class="containers left">
+                        <div class="contents">
+                           <h3>06월</h3>
+                           <p style="font-size:18px;">‘일자리 천국’, 이낙연 지사의 2014년 취임 이후 ‘청년이 돌아오는 전남’을 도정 구호로 내걸고 일자리 업무를 직접 챙긴 결실 =>  전국 지자체 일자리 시상식서 1위</p>
+                        </div>
+                     </div>
+                     <div class="containers right">
+                        <div class="contents">
+                           <h3>09월</h3>
+                           <p style="font-size:18px;">이낙연 전남지사와 김관용 경북지사, 이태식 한국건설연 원장은 6일 국회에서 '건설산업 창조경제 확산을 위한 업무협약'을 체결</p>
+                        </div>
+                     </div>
+                     <div class="containers left">
+                        <div class="contents">
+                           <h3>10월</h3>
+                           <p style="font-size:18px;">이낙연 전남지사, 2017년 도정 청사진 제시</p>
+                        </div>
+                     </div>
+              <div class="containers right">
+                        <div class="contents">
+                           <h3>12월</h3>
+                           <p style="font-size:18px;">"일자리 정책과 서민 배려 시책을 대폭 강화해 2%대 저성장 고착 국면에 들어선 국가 경제와 사회 전반으로 퍼지는 각종 격차 문제 완화에 전남이 앞장서겠다. "</p>
+                        </div>
+                     </div>
+              <div class="containers left">
+                        <div class="contents">
+                           <h3>2017년 04월</h3>
+                           <p style="font-size:18px;">광주·전남중기업청,2017 광주·전남 대규모 합동 채용박람회 개최</p>
+                        </div>
+                     </div>
+              <div class="containers right">
+                        <div class="contents">
+                           <h3>06월</h3>
+                           <p style="font-size:18px;">일자리 창출을 위한 수출 중소기업의 역할과 중소기업에 대한 정부의 적극 지원 의지를 나타냈다.</p>
+                        </div>
+                     </div>
+              <div class="containers left">
+                        <div class="contents">
+                           <h3>12월</h3>
+                           <p style="font-size:18px;">'청년 당사자의 참여가 필요하다는 점과 현장, 즉 청년의 삶에 맞닿은 정책의 필요성'을 계속해서 언급</p>
+                        </div>
+                     </div>
+              <div class="containers right">
+                        <div class="contents">
+                           <h3>2018년 01월</h3>
+                           <p style="font-size:18px;">이낙연 총리, 중소기업 경쟁력 강화를 위한 적극적 정책 수단 가동 의지 보여…</p>
+                        </div>
+                     </div>
+              <div class="containers left">
+                        <div class="contents">
+                           <h3>02월</h3>
+                           <p style="font-size:18px;">이낙연 국무총리 등 정부 인사들 연이어 '유연한 추진' 시사, 속도조절론에 힘 실었다</p>
+                        </div>
+                     </div>
+                     <div class="containers right">
+                        <div class="contents">
+                           <h3>04월</h3>
+                           <p style="font-size:18px;">"일자리 추경, 국회 논의조차 못해.. 야당 대승적 판단해야"</p>
+                        </div>
+                     </div>
+                     <div class="containers left">
+                        <div class="contents">
+                           <h3>05월</h3>
+                           <p style="font-size:18px;">"일자리 안정자금 내년에도 유지.. 中企 더 많이 지원"</p>
+                        </div>
+                     </div>
+                     <div class="containers right">
+                        <div class="contents">
+                           <h3>06월</h3>
+                           <p style="font-size:18px;">근로시간 단축, 단속·처벌 6개월 유예 긍정검토중</p>
+                        </div>
+                     </div>
+
+                     <div class="containers left">
+                        <div class="contents">
+                           <h3>08월</h3>
+                           <p style="font-size:18px;">(고용 관련) 희망적 수치에 안주하지도 말고, 비관적 수치에 위축되지도 말아야 한다는 의견 밝혀</p>
+                        </div>
+                     </div>
+
+                     <div class="containers right">
+                        <div class="contents">
+                           <h3>12월</h3>
+                           <p style="font-size:18px;">"최저 임금법 개정안, 매우 민감한 사안"</p>
+                        </div>
+                     </div>
+                     <div class="containers left">
+                        <div class="contents">
+                           <h3>2019년 01월</h3>
+                           <p style="font-size:18px;">1년 사이 달라진 李총리 신년축사 키워드…노동→투자</p>
+                        </div>
+                     </div>
+                     <div class="containers right">
+                        <div class="contents">
+                           <h3>03월</h3>
+                           <p style="font-size:18px;">"최저임금 인상에 명암 있어...뼈아프게 생각"</p>
+                        </div>
+                     </div>
+                     <div class="containers left">
+                        <div class="contents">
+                           <h3>05월</h3>
+                           <p style="font-size:18px;">최저임금 때문에 경제 나빠진다는 말 조심해야고 밝혀</p>
+                        </div>
+                     </div>
+                     <div class="containers right">
+                        <div class="contents">
+                           <h3>07월</h3>
+                           <p style="font-size:18px;">지난 2년간 취업난과 실업이 완화되지 못하고 있다고 평가</p>
+                        </div>
+                     </div>
+                     <div class="containers left">
+                        <div class="contents">
+                           <h3>11월</h3>
+                           <p style="font-size:18px;">"주52시간제, 국회가 법 개정 서둘러 달라" 절박한 현실 더는 외면할 수 없어</p>
+                        </div>
+                     </div>
+                     <div class="containers right">
+                        <div class="contents">
+                           <h3>2020년 01월</h3>
+                           <p style="font-size:18px;">"취약계층 일자리사업 연초 시행…생계급여지원도 설 이전에 시행"</p>
+                        </div>
+                     </div>
+                  </div>
+               </body>
+            </div>
+         	<!-- Add Pagination -->
+			<div class="swiper-pagination"></div>
+		</div>
+		</div>
+
+		<!-- Swiper JS -->
+		<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+
+		<!-- Initialize Swiper -->
+		<script>
+			var swiper = new Swiper('.swiper-containers', {
+        pagination: {
+          el: '.swiper-pagination',
+        },
+      });
+		</script>
+	</body>
+
+
+	<p style="text-align:right; padding-right:20px;"> • 2016 01 ~ 2020 01 네이버 '이낙연' 검색어 타임라인</p>
+
+
+<body>
+
+
+<!-- 다음의 두 DIV 태그에 둘러 싸여진 부분이 평상시엔 감춰져 있다가 마우스를 갖다대면 나타나는 부분입니다.
+DB에서 글의 내용을 미리 가져다가 이안에 뿌려 놓으면 되는 것이죠...-->
+
+	<!-- <div ID="Text1"  STYLE="DISPLAY:none; z-index: 100; left:40%; bottom:300px;POSITION:absolute;">
+
+<img src="/Users/chaeyeonhwang/Desktop/reportingfile (3) (1)/긍정.png" width="600px">
+
+</div>
+
+	<div ID="Text2" STYLE="DISPLAY:none; z-index: 100; right:40%; bottom:300px;POSITION:absolute;">
+<img src="/Users/chaeyeonhwang/Desktop/reportingfile (3) (1)/부정.png" width="600px">
+
+</div> -->
+
+<!-- 다음은 글의 제목이라고 보시면 됩니다. 보통은 아래의 링크만 보이다가 마우스를 이 글 위에 올려 놓으면 위의 두
+DIV 태그안에 있는 글이 보여지는 것입니다... -->
+
+
+</body>
+  <h3 style="text-align:center; font-size:40px; font-weight:bold; color:#e0e2e4; padding-top:30px;margin-left:auto; margini-right:auto;text-align:center;"> < 평판 분석 ></h3>
+<style>
+.grid line {
+    stroke: lightgrey;
+    stroke-opacity: 4;
+}
+.lineChart {
+	/* 선 스타일 */
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 7px;
+}
+.lineChart:hover {
+    stroke: black;
+    stroke-width: 7px;
+
+}
+.toolTip {
+	/* 눌렀을  때 위에 뜨는거  */
+    position: absolute;
+    border: 1px solid;
+    border-radius: 4px 4px 4px 4px;
+    background: rgba(0, 0, 0, 0.8);
+    color : white;
+    padding: 5px;
+    text-align: center;
+    font-size: 15px;
+    min-width: 30px;
+}
+</style>
+
+<svg width="2000" height="500"></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+    var series = ["긍정"];
+
+    var dataset = [
+        {'201909':36, '201910':40, '201911':38, '201912':46, '202001':42, '202002':47}];
+
+    var keys = d3.keys(dataset[0]);
+    var data = [];
+
+    dataset.forEach(function(d, i) {
+    data[i] = keys.map(function(key) { return {x: key, y: d[key]}; })
+    });
+
+    var margin = {left: 200, top: 10, right: 10, bottom: 20};
+    var svg = d3.select("svg");
+    var width  = parseInt(svg.style("width"), 10) - margin.left - margin.right;
+    var height = parseInt(svg.style("height"), 10)- margin.top  - margin.bottom;
+    var svgG = svg.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var xScale = d3.scalePoint()//scaleBand() scaleOrdinal
+        .domain(keys)
+        .rangeRound([0, width]);
+    var yScale = d3.scaleLinear()
+        // .domain([0, d3.max(dataset, function(d) { return d3.max(keys, function(key) { return d[key];});})])
+				.domain([0, 100])
+        .nice()
+        .range([height, 0]);
+    var colors = d3.scaleOrdinal(d3.schemeCategory10);
+
+    svgG.append("g")
+        .attr("class", "grid")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(xScale)
+            .tickSize(-height)
+        );
+
+    svgG.append("g")
+        .attr("class", "grid")
+        .call(d3.axisLeft(yScale)
+            .ticks(5)
+            .tickSize(-width)
+           );
+
+    var line = d3.line()
+        //.curve(d3.curveBasis)
+        .x(function(d) { return xScale(d.x); })
+        .y(function(d) { return yScale(d.y); });
+    var lineG = svgG.append("g")
+        .selectAll("g")
+        .data(data)
+           .enter().append("g");
+
+    lineG.append("path")
+        .attr("class", "lineChart")
+        .style("stroke", function(d, i) { return colors( series[i]); })
+        .attr("d", function(d, i) {return line(d); });
+
+    lineG.selectAll("dot")
+        .data(function(d) {return d })
+        .enter().append("circle")
+            .attr("r", 3)
+            .attr("cx", function(d) { return xScale(d.x) })
+            .attr("cy", function(d) { return yScale(d.y);})
+            .on("mouseover", function() { tooltip.style("display", null); })
+            .on("mouseout",  function() { tooltip.style("display", "none"); })
+            .on("mousemove", function(d) {
+                tooltip.style("left", (d3.event.pageX+10)+"px");
+                tooltip.style("top",  (d3.event.pageY-10)+"px");
+                tooltip.html("month. " + d.x + "<br/>" + "data value : " + d.y);
+            });
+
+    var tooltip = d3.select("body")
+        .append("div")
+        .attr("class", "toolTip")
+        .style("display", "none");
+
+    var legend = svgG.append("g")
+        .attr("text-anchor", "end")
+        .selectAll("g")
+        .data(series)
+        .enter().append("g")
+        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+    legend.append("rect")
+          .attr("x", width - 20)
+          .attr("width", 19)
+          .attr("height", 19)
+          .attr("fill", colors);
+
+      legend.append("text")
+          .attr("x", width - 30)
+          .attr("y", 9.5)
+          .attr("dy", "0.32em")
+          .text(function(d) { return d; });
+</script>
+
+	<body>
+
+
+<div style="padding-bottom:30px" class="w3-container">
+
+
+
+</div>
+
+<p style="font-size:30px"> <br> </p>
+
+
+<h5 style="text-align:right; font-size:12px;"> • 2019 09~2020 02 네이버&다음 댓글 감정분석</h5>
+
+</div>
+
+
+		<div style="border:3px solid gray; padding:10px;" class="profile">
+		<h6 style="text-align:center; font-size:18px;"> 본 콘텐츠의 저작권은 제공처 또는 서울여대 MINISWU에 있으며 이를 무단 이용하는 경우 저작권법 등에 따라 법적책임을 질 수 있습니다<br>
+		Copyright ⓒ 서울여자대학교 정보보호학과 MINISWU All Rights Reserved.<br>
+
+		<img src="/Users/chaeyeonhwang/Desktop/reportingfile (3) (1)/심볼.png" style="display: block; margin: 0px auto;" width="120px;">
+
+</h6>
+<br>
+
+		<h6 style="text-align:center; font-size:18px; ">서울여자대학교 2019~2020 정보보호학과 종단형 PBL </h6>
+		<h6 style="text-align:center; font-size:15px; "> < Miniswu > 2017111327 김민희, 2017111321 강재은, 2017111703 최주영, 2017111706 황채연</h6>
+
+
+		</div>
+
+
+	</body>
+
+</html>
